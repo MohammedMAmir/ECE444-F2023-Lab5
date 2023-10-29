@@ -1,10 +1,12 @@
 import os
 import pytest
-
-from project.app import app, init_db
+import json
 from pathlib import Path
 
+from project.app import app, init_db
+
 TEST_DB = "test.db"
+
 
 @pytest.fixture
 def client():
@@ -25,20 +27,22 @@ def login(client, username, password):
         follow_redirects=True,
     )
 
+
 def logout(client):
     """Logout helper function"""
     return client.get("/logout", follow_redirects=True)
 
-def test_index():
-    tester = app.test_client()
-    response = tester.get("/", content_type="html/text")
 
+def test_index(client):
+    response = client.get("/", content_type="html/text")
     assert response.status_code == 200
-    assert response.data == b"Hello, World!"
 
-def test_database():
-    init_db()
-    assert Path("flaskr.db").is_file()
+
+def test_database(client):
+    """initial test. ensure that the database exists"""
+    tester = Path("test.db").is_file()
+    assert tester
+
 
 def test_empty_db(client):
     """Ensure database is blank"""
@@ -69,3 +73,9 @@ def test_messages(client):
     assert b"No entries here so far" not in rv.data
     assert b"&lt;Hello&gt;" in rv.data
     assert b"<strong>HTML</strong> allowed here" in rv.data
+
+def test_delete_message(client):
+    """Ensure the messages are being deleted"""
+    rv = client.get('/delete/1')
+    data = json.loads(rv.data)
+    assert data["status"] == 1
