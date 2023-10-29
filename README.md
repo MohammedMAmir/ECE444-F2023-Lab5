@@ -1,5 +1,9 @@
 # ECE444-F2023-Lab5
 
+#### Unit Test
+https://github.com/ECE444-2023Fall/project-1-web-application-design-group16-fieryflamingos/blob/models_development/tests/test_db.py#L171-L209
+Worked on RSVP tests
+
 #### Pros and Cons of TDD
 
 Test-Driven Design (TDD) provides an iterative way to develop and test code as a project progresses. Not only does it make the testing of a software project much simpler, providing a set a of concrete cases to pass before development even begins, but it also makes development easier. Developers have a concrete understanding of the features and properties that the software should exhibit as they write it and these features can be expanded upon as they move along. In this way, TDD helps shape the design of the project as it moves along.
